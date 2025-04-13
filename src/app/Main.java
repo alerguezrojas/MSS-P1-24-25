@@ -20,10 +20,26 @@ public class Main {
 
         // Fibonacci series
         System.out.println("\nFIBONACCI SERIES");
-        System.out.println("Enter the number of Fibonacci numbers to generate: ");
-        long n = scanner.nextInt();
+        System.out.print("Enter the number of Fibonacci numbers to generate: ");
+        long n = scanner.nextLong();
         List<Long> fibonacciNumbers = FibonacciSeries.generateFibonacci(n);
-        System.out.println("Fibonacci series: " + fibonacciNumbers);
+        System.out.println("Fibonacci numbers: " + fibonacciNumbers);
+        System.out.println("Generating Fibonacci numbers in the interval [n1, n2]");
+        System.out.print("Enter the lower bound (n1): ");
+        long n1 = scanner.nextLong();
+        System.out.print("Enter the upper bound (n2): ");
+        long n2 = scanner.nextLong();
+        List<Long> fibonacciInInterval = FibonacciSeries.generateFibonacciInInterval(n1, n2);
+        System.out.println("Fibonacci numbers in the interval [" + n1 + ", " + n2 + "]: " + fibonacciInInterval);
+        System.out.println("Checking if a number is part of the Fibonacci series");
+        System.out.print("Enter a number to check: ");
+        long number = scanner.nextLong();
+        boolean isFibonacci = FibonacciSeries.isFibonacci(number);
+        if (isFibonacci) {
+            System.out.println(number + " is part of the Fibonacci series.");
+        } else {
+            System.out.println(number + " is not part of the Fibonacci series.");
+        }
 
     }
 }
