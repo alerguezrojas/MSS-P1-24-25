@@ -1,8 +1,10 @@
 package app;
 
+import algebra.Vector;
 import numbers.FibonacciSeries;
 import numbers.PrimeNumbers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,6 +41,28 @@ public class Main {
             System.out.println(number + " is part of the Fibonacci series.");
         } else {
             System.out.println(number + " is not part of the Fibonacci series.");
+        }
+
+        // Vector operations
+        System.out.println("\nVECTOR OPERATIONS");
+        System.out.print("Enter the dimension of the vectors: ");
+        int dimension = scanner.nextInt();
+        System.out.println("Enter the components of the first vector (separated by spaces):");
+        Vector v1 = Vector.readFromInput(scanner, dimension);
+        System.out.println("Enter the components of the second vector (separated by spaces):");
+        Vector v2 = Vector.readFromInput(scanner, dimension);
+        System.out.println("\nVector 1:");
+        v1.print();
+        System.out.println("Vector 2:");
+        v2.print();
+        System.out.println("Dot product of the vectors: " + v1.dotProduct(v2));
+        System.out.print("Enter a file name to write the first vector: ");
+        String fileName = scanner.next();
+        try {
+            v1.write(fileName);
+            System.out.println("Vector written to " + fileName);
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
         }
 
     }
