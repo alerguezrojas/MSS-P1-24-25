@@ -45,7 +45,7 @@ public class Main {
 
         // Vector operations
         System.out.println("\nVECTOR OPERATIONS");
-        System.out.print("Enter the dimension of the vectors: ");
+        System.out.print("Enter the dimension of the vectors: ");;
         int dimension = scanner.nextInt();
         System.out.println("Enter the components of the first vector (separated by spaces):");
         Vector v1 = Vector.readFromInput(scanner, dimension);
@@ -53,8 +53,10 @@ public class Main {
         Vector v2 = Vector.readFromInput(scanner, dimension);
         System.out.println("\nVector 1:");
         v1.print();
+        v1.getDimension();
         System.out.println("Vector 2:");
         v2.print();
+        v2.getDimension();
         System.out.println("Dot product of the vectors: " + v1.dotProduct(v2));
         System.out.print("Enter a file name to write the first vector: ");
         String fileName = scanner.next();
