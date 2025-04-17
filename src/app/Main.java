@@ -1,71 +1,156 @@
 package app;
 
-import algebra.Vector;
-import numbers.FibonacciSeries;
 import numbers.PrimeNumbers;
+import numbers.FibonacciSeries;
+import algebra.Vector;
+import algebra.Matrix;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class for interacting with the application.
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Prime numbers
-        System.out.println("PRIME NUMBERS");
-        System.out.print("Enter a limit to generate prime numbers: ");
-        int limit = scanner.nextInt();
-        List<Integer> primes = PrimeNumbers.getPrimesUpTo(limit);
-        System.out.println("Prime numbers up to " + limit + ": " + primes);
-        System.out.println("Sum of prime numbers: " + PrimeNumbers.sumPrimes(primes));
+        System.out.println("=== MENU ===");
+        System.out.println("1. Prime Numbers");
+        System.out.println("2. Fibonacci Series");
+        System.out.println("3. Vector Operations");
+        System.out.println("4. Matrix Operations");
+        System.out.print("Select an option (1-4): ");
 
-        // Fibonacci series
-        System.out.println("\nFIBONACCI SERIES");
-        System.out.print("Enter the number of Fibonacci numbers to generate: ");
-        long n = scanner.nextLong();
-        List<Long> fibonacciNumbers = FibonacciSeries.generateFibonacci(n);
-        System.out.println("Fibonacci numbers: " + fibonacciNumbers);
-        System.out.println("Generating Fibonacci numbers in the interval [n1, n2]");
-        System.out.print("Enter the lower bound (n1): ");
-        long n1 = scanner.nextLong();
-        System.out.print("Enter the upper bound (n2): ");
-        long n2 = scanner.nextLong();
-        List<Long> fibonacciInInterval = FibonacciSeries.generateFibonacciInInterval(n1, n2);
-        System.out.println("Fibonacci numbers in the interval [" + n1 + ", " + n2 + "]: " + fibonacciInInterval);
-        System.out.println("Checking if a number is part of the Fibonacci series");
-        System.out.print("Enter a number to check: ");
-        long number = scanner.nextLong();
-        boolean isFibonacci = FibonacciSeries.isFibonacci(number);
-        if (isFibonacci) {
-            System.out.println(number + " is part of the Fibonacci series.");
-        } else {
-            System.out.println(number + " is not part of the Fibonacci series.");
+        int option = scanner.nextInt();
+        System.out.println();
+
+        switch (option) {
+            case 1 -> handlePrimeNumbers(scanner);
+            case 2 -> handleFibonacciSeries(scanner);
+            case 3 -> handleVectorOperations(scanner);
+            case 4 -> handleMatrixOperations(scanner);
+            default -> System.out.println("Invalid option. Exiting.");
         }
 
-        // Vector operations
-        System.out.println("\nVECTOR OPERATIONS");
-        System.out.print("Enter the dimension of the vectors: ");;
-        int dimension = scanner.nextInt();
-        System.out.println("Enter the components of the first vector (separated by spaces):");
-        Vector v1 = Vector.readFromInput(scanner, dimension);
-        System.out.println("Enter the components of the second vector (separated by spaces):");
-        Vector v2 = Vector.readFromInput(scanner, dimension);
+        scanner.close();
+    }
+
+    // PRIME NUMBERS
+    private static void handlePrimeNumbers(Scanner scanner) {
+        System.out.print("Enter upper limit to generate prime numbers: ");
+        int limit = scanner.nextInt();
+
+        List<Integer> primes = PrimeNumbers.getPrimesUpTo(limit);
+        System.out.println("Prime numbers up to " + limit + ": " + primes);
+        System.out.println("Sum of primes: " + PrimeNumbers.sumPrimes(primes));
+    }
+
+    // FIBONACCI
+    private static void handleFibonacciSeries(Scanner scanner) {
+        System.out.print("Enter number of Fibonacci elements to generate: ");
+        long n = scanner.nextLong();
+        System.out.println("First " + n + " Fibonacci numbers:");
+        System.out.println(FibonacciSeries.generateFibonacci(n));
+
+        System.out.print("Enter interval [min max] to list Fibonacci numbers: ");
+        long min = scanner.nextLong();
+        long max = scanner.nextLong();
+        System.out.println("Fibonacci numbers in interval [" + min + ", " + max + "]:");
+        System.out.println(FibonacciSeries.generateFibonacciInInterval(min, max));
+
+        System.out.print("Enter a number to check if it's in the Fibonacci sequence: ");
+        long num = scanner.nextLong();
+        System.out.println("Is Fibonacci? " + FibonacciSeries.isFibonacci(num));
+    }
+
+    // VECTOR
+    private static void handleVectorOperations(Scanner scanner) {
+        System.out.print("Enter the dimension of the vectors: ");
+        int dim = scanner.nextInt();
+
+        System.out.println("Enter components for Vector 1:");
+        Vector v1 = Vector.readFromInput(scanner, dim);
+        System.out.println("Enter components for Vector 2:");
+        Vector v2 = Vector.readFromInput(scanner, dim);
+
         System.out.println("\nVector 1:");
         v1.print();
-        v1.getDimension();
         System.out.println("Vector 2:");
         v2.print();
-        v2.getDimension();
-        System.out.println("Dot product of the vectors: " + v1.dotProduct(v2));
-        System.out.print("Enter a file name to write the first vector: ");
+
+        System.out.println("Dot product: " + v1.dotProduct(v2));
+
+        System.out.print("Enter filename to save Vector 1 (e.g., vector.txt): ");
         String fileName = scanner.next();
         try {
             v1.write(fileName);
-            System.out.println("Vector written to " + fileName);
+            System.out.println("Vector 1 written to " + fileName);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         }
-
     }
+
+    // MATRIX
+    private static void handleMatrixOperations(Scanner scanner) {
+        // MANUAL INPUT
+        System.out.println("=== Manual Matrix Input ===");
+        System.out.print("Enter number of rows and columns for Matrix A: ");
+        int rowsA = scanner.nextInt();
+        int colsA = scanner.nextInt();
+        Matrix A = Matrix.readFromInput(scanner, rowsA, colsA);
+
+        System.out.print("Enter number of rows and columns for Matrix B: ");
+        int rowsB = scanner.nextInt();
+        int colsB = scanner.nextInt();
+        Matrix B = Matrix.readFromInput(scanner, rowsB, colsB);
+
+        System.out.println("\nMatrix A:");
+        A.print();
+        System.out.println("Matrix B:");
+        B.print();
+
+        if (colsA == rowsB) {
+            Matrix product = A.multiply(B);
+            System.out.println("Product A × B:");
+            product.print();
+        } else {
+            System.out.println("Matrices are incompatible for multiplication.");
+        }
+
+        // FILE INPUT
+        System.out.println("\n=== File Matrix Input ===");
+        System.out.print("Enter filename for Matrix A (e.g., matrixA.txt): ");
+        String fileA = scanner.next();
+        System.out.print("Enter filename for Matrix B (e.g., matrixB.txt): ");
+        String fileB = scanner.next();
+
+        try {
+            Matrix matA = Matrix.read(fileA);
+            Matrix matB = Matrix.read(fileB);
+
+            System.out.println("\nMatrix A from file:");
+            matA.print();
+            System.out.println("Matrix B from file:");
+            matB.print();
+
+            if (matA.getNumCol() == matB.getNumRow()) {
+                Matrix product = matA.multiply(matB);
+                System.out.println("Product A × B from file:");
+                product.print();
+
+                System.out.print("Enter filename to save the result (e.g., result.txt): ");
+                String output = scanner.next();
+                product.write(output);
+                System.out.println("Result written to " + output);
+            } else {
+                System.out.println("Matrices from file are incompatible for multiplication.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading or writing matrices: " + e.getMessage());
+        }
+    }
+
 }
