@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"algebra"},{"l":"All Packages","u":"allpackages-index.html"},{"l":"app"},{"l":"numbers"}];updateSearchResults();
