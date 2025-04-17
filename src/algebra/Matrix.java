@@ -99,12 +99,22 @@ public class Matrix {
      * @param colIndex Index of the column.
      * @return A Vector containing the column values.
      */
-    private Vector getColumn(int colIndex) {
+    public Vector getColumn(int colIndex) {
         double[] column = new double[getNumRow()];
         for (int i = 0; i < getNumRow(); i++) {
             column[i] = this.rows[i].getComponent(colIndex);
         }
         return new Vector(column);
+    }
+
+    /**
+     * Returns a row of the matrix as a Vector.
+     *
+     * @param rowIndex Index of the row.
+     * @return A Vector containing the row values.
+     */
+    public Vector getRow(int rowIndex) {
+        return rows[rowIndex];
     }
 
     /**
